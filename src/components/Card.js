@@ -1,6 +1,6 @@
 function Card(props) {
     function handleClick() {
-        props.onCardClick(props.link);
+        props.onCardClick({link: props.link, name: props.name});
     }
 
     return (
