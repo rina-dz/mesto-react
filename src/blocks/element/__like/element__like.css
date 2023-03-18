@@ -1,0 +1,16 @@
+.element__like {
+    background-image: url(../../../images/Vector.svg);
+    background-color: transparent;
+    background-size: cover;
+    padding: 0;
+    border: 0;
+    min-width: 22px;
+    min-height: 19px;
+    margin: 22px auto 3px;
+    transition: opacity 0.5s;
+}
+
+.element__like:hover {
+    opacity: 50%;
+    cursor: pointer;
+}

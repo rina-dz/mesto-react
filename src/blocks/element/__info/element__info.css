@@ -1,0 +1,9 @@
+.element__info {
+    margin: 0 15px 0 21px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    height: min-content;
+    max-width: 246px;
+    justify-content: space-between;
+}

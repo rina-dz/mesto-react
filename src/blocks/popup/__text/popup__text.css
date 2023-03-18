@@ -1,0 +1,25 @@
+.popup__text {
+  margin: 0 36px 0;
+  padding: 0 0 9.2px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+  border-top: 0;
+  border-left: 0;
+  border-right: 0;
+  width: 358px;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 14px;
+}
+
+@media screen and (min-width: 320px) and (max-width: 900px) {
+  .popup__text {
+    margin: 0 22px 0;
+    width: 238px;
+  } 
+}
+
+.popup__text::-webkit-input-placeholder {color:rgba(196, 196, 196, 1);}
+.popup__text::-moz-placeholder          {color:rgba(196, 196, 196, 1);}
+.popup__text:-moz-placeholder           {color:rgba(196, 196, 196, 1);}
+.popup__text::-ms-input-placeholder     {color:rgba(196, 196, 196, 1);}
+.popup__text:-ms-input-placeholder      {color:rgba(196, 196, 196, 1);}
