@@ -1,17 +1,36 @@
+import React, { useState, useEffect } from 'react';
+import CurrentUserContext from '../contexts/CurrentUserContext.js';
+
 function Card(props) {
+
+    const currentUser = React.useContext(CurrentUserContext);
+    const isOwn = props.owner === currentUser._id;
+    const isLiked = props.likes.some(i => i._id === currentUser._id);
+    const cardLikeButtonClassName = (
+        `element__like ${isLiked && 'element__active-like'}`
+    );
+
     function handleClick() {
-        props.onCardClick({link: props.link, name: props.name});
+        props.onCardClick({ link: props.link, name: props.name });
+    }
+
+    function handleDeleteClick() {
+        props.onCardDelete(props.card);
+    }
+
+    function handleLikeClick() {
+        props.onCardLike(props.card);
     }
 
     return (
         <article className="element">
-            <button className="element__trash" type="button" />
+            {isOwn && <button className="element__trash" type="button" onClick={handleDeleteClick} />}
             <img className="element__image" src={props.link} alt={props.name} onClick={handleClick} />
             <div className="element__info">
                 <h2 className="element__name">{props.name}</h2>
                 <div className="element__like-place">
-                    <button className="element__like" type="button" />
-                    <h2 className="element__like-counter">{props.likes}</h2>
+                    <button className={cardLikeButtonClassName} type="button" onClick={handleLikeClick} />
+                    <h2 className="element__like-counter">{props.likesNum}</h2>
                 </div>
             </div>
         </article>
