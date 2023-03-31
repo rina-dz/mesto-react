@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { newApi } from '../utils/api.js';
 import Header from './Header.js';
 import Main from './Main.js';
@@ -15,23 +15,22 @@ function App() {
 
   const [currentUser, setcurrentUser] = React.useState({});
   const [cards, addCards] = React.useState([]);
+  const [isEditAvatarPopupOpen, setEditAvatarPopupOpen] = React.useState(false);
+  const [isEditProfilePopupOpen, setEditProfilePopupOpen] = React.useState(false);
+  const [isAddPlacePopupOpen, setAddPlacePopupOpen] = React.useState(false);
+  const [isImagePopupOpen, setImagePopupOpen] = React.useState(false);
+  const [selectedCard, selectCard] = React.useState({});
 
   React.useEffect(() => {
     newApi.getInitialCards()
       .then((res) => {
-        addCards(res.map((el) => ({
-          name: el.name,
-          link: el.link,
-          likes: el.likes,
-          likesNum: el.likes.length,
-          _id: el._id,
-          owner: el.owner._id
-        })));
+        addCards(res);
+        console.log(cards);
       })
       .catch((err) => {
         console.log(err);
       })
-  });
+  }, []);
 
   React.useEffect(() => {
     newApi.getUserInfo()
@@ -42,13 +41,8 @@ function App() {
       .catch((err) => {
         console.log(err);
       })
-  });
+  }, []);
 
-  const [isEditAvatarPopupOpen, setEditAvatarPopupOpen] = React.useState(false);
-  const [isEditProfilePopupOpen, setEditProfilePopupOpen] = React.useState(false);
-  const [isAddPlacePopupOpen, setAddPlacePopupOpen] = React.useState(false);
-  const [isImagePopupOpen, setImagePopupOpen] = React.useState(false);
-  const [selectedCard, selectCard] = React.useState({});
 
   function handleCardLike(card) {
     const isLiked = card.likes.some(i => i._id === currentUser._id);
@@ -57,16 +51,27 @@ function App() {
         .then((newCard) => {
           addCards((state) => state.map((c) => c._id === card._id ? newCard : c));
         })
+        .catch((err) => {
+          console.log(err);
+        })
     } else {
       newApi.removeLike(card._id)
+        .then((newCard) => {
+          addCards((state) => state.map((c) => c._id === card._id ? newCard : c));
+        })
+        .catch((err) => {
+          console.log(err);
+        })
     }
   }
 
   function handleCardDelete(card) {
     newApi.deleteCard(card._id)
       .then(() => {
-        const newCards = cards.filter((item) => item !== card);
-        addCards(newCards);
+        addCards((state) => state.filter((item) => item !== card));
+      })
+      .catch((err) => {
+        console.log(err);
       })
   }
 
@@ -89,6 +94,9 @@ function App() {
         setcurrentUser(info);
         closeAllPopups();
       })
+      .catch((err) => {
+        console.log(err);
+      })
   }
 
   function handleUpdateAvatar(info) {
@@ -97,6 +105,9 @@ function App() {
         setcurrentUser(info);
         closeAllPopups();
       })
+      .catch((err) => {
+        console.log(err);
+      })
   }
 
   function handleAddPlaceSubmit(newCard) {
@@ -104,6 +115,9 @@ function App() {
       .then(() => {
         addCards([newCard, ...cards]);
         closeAllPopups();
+      })
+      .catch((err) => {
+        console.log(err);
       })
   }
 
