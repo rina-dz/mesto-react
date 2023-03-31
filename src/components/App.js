@@ -91,7 +91,7 @@ function App() {
   function handleUpdateUser(info) {
     newApi.changeUserInfo(info)
       .then(() => {
-        setcurrentUser(info);
+        setcurrentUser({name: info.name, description: info.description, _id: currentUser._id, avatar: currentUser.avatar});
         closeAllPopups();
       })
       .catch((err) => {
@@ -102,7 +102,7 @@ function App() {
   function handleUpdateAvatar(info) {
     newApi.changeAvatar(info)
       .then(() => {
-        setcurrentUser(info);
+        setcurrentUser({avatar: info.avatar, name: currentUser.name, description: currentUser.description, _id: currentUser._id });
         closeAllPopups();
       })
       .catch((err) => {
